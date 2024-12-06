@@ -23,7 +23,7 @@
                 <time datetime="2016-01-31 1:00">January 31, 2016 at 1:00</time>
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc ut rhoncus felis, vel tincidunt neque. Vestibulum ut metus eleifend, malesuada nisl at, scelerisque sapien. Vivamus pharetra massa libero, sed feugiat turpis efficitur at.</p>
             </div>
-            {{#each blogEntry.comments}}
+            {{#each blogDetails.comments}}
                 <div class="comment">
                     <strong>{{author}}</strong>
                     <time datetime={{date}}>{{date}}</time>
@@ -31,7 +31,7 @@
                 </div>
             {{/each}}
             <div class="new-comment">
-                <form method="post" action="/entries/{{blogEntry.slug}}/comments">
+                <form method="post" action="/entries/{{blogDetails.slug}}/comments">
                     <label for="name">Name</label>
                     <input type="text" name="name" id="name"><br>
                     <label for="comment">Comment</label>
