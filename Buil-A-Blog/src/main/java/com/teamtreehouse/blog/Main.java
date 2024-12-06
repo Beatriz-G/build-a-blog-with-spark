@@ -28,7 +28,7 @@ public class Main {
         BlogEntry blogEntry1 = new BlogEntry("The best day I've ever had", "I went to the beach and tanned. Then I got pizza and drank an ice cold Coca Cola. Life is worth living.", "SweetiePie");
         BlogEntry blogEntry2 = new BlogEntry("The absolute worst day I’ve ever had", "My ice cream fell and then I tripped. Everyone laughed and I ran home. Now I have no ice cream.", "SweetiePie");
         BlogEntry blogEntry3 = new BlogEntry("That time at the mall", "I bought a lot of shoes, and found a nice cashmere sweater. I bought a sweet treat at the dining hall and then met up with some friends.", "SweetiePie");
-        BlogEntry blogEntry4 = new BlogEntry("Dude, where’s my car?", "Someone stole my car and I had to walk 50 miles home! My feet are peeling and now I'm careless.", "SweetiePie");
+        BlogEntry blogEntry4 = new BlogEntry("Dude, where’s my car?", "Someone stole my car and I had to walk 50 miles home! My feet are peeling and now I'm carless. Bus and walking will be my new method of transportaion.", "SweetiePie");
         dao.addEntry(blogEntry1);
         dao.addEntry(blogEntry2);
         dao.addEntry(blogEntry3);
@@ -125,15 +125,6 @@ public class Main {
             return null;
         });
 
-
-
-
-
-
-
-
-        // Code for "comment" starts here
-
         // Users can send/save a comment
         post("/entries/:slug/comments", (req, res) -> {
             BlogEntry blogEntry = dao.findEntryBySlug(req.params("slug"));
@@ -144,54 +135,6 @@ public class Main {
             res.redirect("/entries/" + req.params("slug"));
             return null;
         });
-
-
-
-
-
-        /* Started off with the code below, wanted a comment to show if comment is successful or not
-            Added "String slug = req.params(":slug");" thought it might be the slug that isn't working, needs more slug? (??)
-
-        post("/entries/:slug/comments", (req, res) -> {
-            String slug = req.params(":slug");
-            BlogEntry blogDetails = dao.findEntryBySlug(req.params("slug"));
-            String name = req.queryParams("name");
-            String content = req.queryParams("comment");
-            Comment additionalComment = new Comment(name, content);
-            blogDetails.addComment(additionalComment);
-            if (dao.addEntry(blogDetails)) {
-            setFlashMessage(req, "Comment added successfully! Yay!");
-            } else {
-                setFlashMessage(req, "Failed comment upload.");
-            }
-            res.redirect("/entries/" + req.params("slug"));
-            return null;
-        });
-        */
-
-
-
-        /* Tried this without the extra slug or the if/else saying comment uploaded or not
-
-        post("/entries/:slug/comments", (req, res) -> {
-            BlogEntry blogDetails = dao.findEntryBySlug(req.params("slug"));
-            String author = req.queryParams("name");
-            String content = req.queryParams("comment");
-            Comment comment = new Comment(author, content);
-            res.redirect("/entries/" + req.params("slug"));
-            return null;
-        */
-
-
-
-
-
-
-
-
-
-
-
 
         // not-found.hbs
         exception(NotFoundException.class, (exc, req, res) -> {

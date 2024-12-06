@@ -26,7 +26,7 @@
             {{#each blogDetails.comments}}
                 <div class="comment">
                     <strong>{{author}}</strong>
-                    <time datetime={{date}}>{{date}}</time>
+                    <time datetime={{date}}>{{formattedDate}}</time>
                     <p>{{content}}</p>
                 </div>
             {{/each}}
