@@ -132,7 +132,7 @@ public class Main {
 
 
 
-        // Comment code starts here
+        // Code for "comment" starts here
 
         // Users can send/save a comment
         post("/entries/:slug/comments", (req, res) -> {
@@ -145,8 +145,7 @@ public class Main {
             return null;
         });
 
-        //Comment additionalComment = new Comment(author, content);
-        //blogDetails.addComment(additionalComment);
+
 
 
 
