@@ -98,7 +98,7 @@ public class Main {
             String author = req.queryParams("author");
             BlogEntry blogEntry = new BlogEntry(title, content, author);
             dao.addEntry(blogEntry);
-            res.redirect("/"); // tried adding "/entries/" but didn't work
+            res.redirect("/");
             return null;
         });
 
