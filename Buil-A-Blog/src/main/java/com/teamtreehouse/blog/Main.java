@@ -86,9 +86,21 @@ public class Main {
         });
 
         // new.hbs page
-        get("/new", (req, res) -> {
+        get("/entries/new", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
             return new ModelAndView(null, "new.hbs");
         }, new HandlebarsTemplateEngine());
+
+        // New entry
+        post("/entries", (req, res) -> {
+            String title = req.queryParams("title");
+            String content = req.queryParams("content");
+            String author = req.queryParams("author");
+            BlogEntry blogEntry = new BlogEntry(title, content, author);
+            dao.addEntry(blogEntry);
+            res.redirect("/"); // tried adding "/entries/" but didn't work
+            return null;
+        });
 
         // detail.hbs page
         get ("/entries/:slug", (req, res) -> {
@@ -120,37 +132,21 @@ public class Main {
 
 
 
-
-        // New entry
-        post("/entries", (req, res) -> {
-            String title = req.queryParams("title");
-            String content = req.queryParams("content");
-            String author = req.queryParams("author");
-            BlogEntry createNewEntry = new BlogEntry(title, content, author);
-            dao.addEntry(createNewEntry);
-            res.redirect("/entries");
-            return null;
-        });
-
-
-
-
-
-
-
         // Comment code starts here
 
         // Users can send/save a comment
         post("/entries/:slug/comments", (req, res) -> {
-            BlogEntry blogDetails = dao.findEntryBySlug(req.params("slug"));
-            String name = req.queryParams("name");
-            String comment = req.queryParams("comment");
-            Comment additionalComment = new Comment(name, comment);
-            blogDetails.addComment(additionalComment);
+            BlogEntry blogEntry = dao.findEntryBySlug(req.params("slug"));
+            String author = req.queryParams("name");
+            String content = req.queryParams("comment");
+            Comment newComment = new Comment(author, content);
+            blogEntry.addComment(newComment);
             res.redirect("/entries/" + req.params("slug"));
             return null;
         });
 
+        //Comment additionalComment = new Comment(author, content);
+        //blogDetails.addComment(additionalComment);
 
 
 
