@@ -116,11 +116,7 @@ public class Main {
 
 
 
-        get("/entries/:slug/edit", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
-            model.put("blogDetails", dao.findEntryBySlug(req.params("slug")));
-            return new ModelAndView(model, "edit.hbs");
-        }, new HandlebarsTemplateEngine());
+
 
 
 
