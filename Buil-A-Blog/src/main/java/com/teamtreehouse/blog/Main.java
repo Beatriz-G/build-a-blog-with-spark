@@ -97,6 +97,25 @@ public class Main {
             return new ModelAndView(model, "detail.hbs");
         }, new HandlebarsTemplateEngine());
 
+        // edit.hbs page
+        get("/entries/:slug/edit", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            model.put("blogDetails", dao.findEntryBySlug(req.params("slug")));
+            return new ModelAndView(model, "edit.hbs");
+        }, new HandlebarsTemplateEngine());
+
+        // Users can edit blog entry and save the information
+        post("/entries/:slug/edit", (req, res) -> {
+            String newTitle = req.queryParams("title");
+            String newContent = req.queryParams("content");
+            BlogEntry edit = dao.edit(req.params("slug"), newTitle, newContent);
+            res.redirect("/entries/" + edit.getSlug());
+            return null;
+        });
+
+
+
+
 
 
 
@@ -109,7 +128,7 @@ public class Main {
             String author = req.queryParams("author");
             BlogEntry createNewEntry = new BlogEntry(title, content, author);
             dao.addEntry(createNewEntry);
-            res.redirect("/");
+            res.redirect("/entries");
             return null;
         });
 
@@ -119,49 +138,54 @@ public class Main {
 
 
 
+        // Comment code starts here
 
-        // edit.hbs page
-        // Tried this path -> "/edit/:slug"
-       /* get("/entries/:slug/edit", (req, res) -> {
-            String slug = req.params("slug");
-            Map<String, Object> model = new HashMap<>();
+        // Users can send/save a comment
+        post("/entries/:slug/comments", (req, res) -> {
             BlogEntry blogDetails = dao.findEntryBySlug(req.params("slug"));
-            model.put("blogDetails", blogDetails);
-            return new ModelAndView(model, "edit.hbs");
-        }, new HandlebarsTemplateEngine());*/
-
-        // edit.hbs page
-        get("/entries/:slug/edit", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
-            model.put("blogDetails", dao.findEntryBySlug(req.params("slug")));
-            return new ModelAndView(model, "edit.hbs");
-        }, new HandlebarsTemplateEngine());
-
-
-        // Users can edit blog entry and save the information
-        post("/entries/:slug/edit", (req, res) -> {
-            String newTitle = req.queryParams("title");
-            String newContent = req.queryParams("content");
-            BlogEntry blogDetails = new BlogEntry(req.params("slug"), newTitle, newContent);
-            res.redirect("/entries/" + blogDetails.getSlug());
+            String name = req.queryParams("name");
+            String comment = req.queryParams("comment");
+            Comment additionalComment = new Comment(name, comment);
+            blogDetails.addComment(additionalComment);
+            res.redirect("/entries/" + req.params("slug"));
             return null;
         });
 
-        // Users can send and save a comment
-        post("/entries/:slug/comment", (req, res) -> {
+
+
+
+        /* Started off with the code below, wanted a comment to show if comment is successful or not
+            Added "String slug = req.params(":slug");" thought it might be the slug that isn't working, needs more slug? (??)
+
+        post("/entries/:slug/comments", (req, res) -> {
+            String slug = req.params(":slug");
             BlogEntry blogDetails = dao.findEntryBySlug(req.params("slug"));
-            String author = req.queryParams("name");
+            String name = req.queryParams("name");
             String content = req.queryParams("comment");
-            Comment comment = new Comment(author, content);
+            Comment additionalComment = new Comment(name, content);
+            blogDetails.addComment(additionalComment);
             if (dao.addEntry(blogDetails)) {
-                setFlashMessage(req, "Comment added succesfully! Yay!");
+            setFlashMessage(req, "Comment added successfully! Yay!");
             } else {
                 setFlashMessage(req, "Failed comment upload.");
             }
             res.redirect("/entries/" + req.params("slug"));
             return null;
         });
+        */
 
+
+
+        /* Tried this without the extra slug or the if/else saying comment uploaded or not
+
+        post("/entries/:slug/comments", (req, res) -> {
+            BlogEntry blogDetails = dao.findEntryBySlug(req.params("slug"));
+            String author = req.queryParams("name");
+            String content = req.queryParams("comment");
+            Comment comment = new Comment(author, content);
+            res.redirect("/entries/" + req.params("slug"));
+            return null;
+        */
 
 
 

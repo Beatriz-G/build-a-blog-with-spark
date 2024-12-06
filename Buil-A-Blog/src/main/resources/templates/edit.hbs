@@ -8,10 +8,10 @@
                 <form method="post" action="/entries/{{blogDetails.slug}}/edit">
                     <label for="title"> Title</label>
                     <input type="text" name="title" id="title" value="{{blogDetails.title}}"><br>
-                    <label for="entry">Entry</label>
-                    <textarea rows="5" name="content" id="content" {{blogDetails.content}}></textarea>
+                    <label for="content">Entry</label>
+                    <textarea rows="5" name="content" id="content">{{blogDetails.content}}</textarea>
                     <input type="submit" value="Save Entry" class="button">
-                    <a href="/entries/" {{blogDetails.slug}} class="button button-secondary">Cancel</a>
+                    <a href="/entries/{{blogDetails.slug}}" class="button button-secondary">Cancel</a>
                 </form>
             </div>
         </div>
