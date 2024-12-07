@@ -94,7 +94,7 @@ public class Main {
         // New entry
         post("/entries", (req, res) -> {
             String title = req.queryParams("title");
-            String content = req.queryParams("content");
+            String content = req.queryParams("entry");
             String author = req.queryParams("author");
             BlogEntry blogEntry = new BlogEntry(title, content, author);
             dao.addEntry(blogEntry);
